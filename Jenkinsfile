@@ -2,16 +2,32 @@ pipeline {
     agent any
 
     stages {
-        stage('Check Workspace') {
+
+        stage('Check Files') {
             steps {
                 bat 'dir'
             }
         }
 
-        stage('Display sample.txt') {
+        stage('Compile Java') {
             steps {
-                bat 'type sample.txt'
+                bat 'javac Add.java'
             }
+        }
+
+        stage('Run Java Program') {
+            steps {
+                bat 'java Add'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'BUILD SUCCESSFUL'
+        }
+        failure {
+            echo 'BUILD FAILED'
         }
     }
 }
